@@ -34,6 +34,7 @@ print("After you submit each guess, it will tell you how close you are to the co
 print("X\tThe letter is not in the word.")
 print("_\tThe letter is in the word, but in the wrong place.")
 print("O\tThe letter is in the correct place!")
+print("You can guess 'exit' to leave!")
 
 while current_num_guesses <= max_num_guesses:
     guess = input("Guess:")
