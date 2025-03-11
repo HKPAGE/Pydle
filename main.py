@@ -15,11 +15,14 @@ def get_guess_results(guess):
 answer_list = []
 script_dir = os.path.dirname(os.path.abspath(__file__))
 file_path = os.path.join(script_dir, "wordle-answers-alphabetical.txt") 
-answer_file = open("wordle-answers-alphabetical.txt","r")
-for x in answer_file:
-    x = x.strip()
-    answer_list.append(x)
-answer_file.close()
+answer_file = open(file_path, "r")
+
+try:
+    with open(file_path, "r") as answer_file:
+        answer_list = [x.strip() for x in answer_file]
+except FileNotFoundError:
+    print("Error: wordle-answers-alphabetical.txt not found.")
+    exit(1)
 
 max_num_guesses = 6
 current_num_guesses = 1
@@ -35,10 +38,18 @@ print("O\tThe letter is in the correct place!")
 while current_num_guesses <= max_num_guesses:
     guess = input("Guess:")
 
+    if guess.lower() == 'exit':
+        print("Goodbye!")
+        exit()
+
     while len(guess) != 5:
         print("Your guess must be exactly 5 letters long.")
         guess = input("Guess:")
     
+    if not guess.isalpha():
+        print("Your guess must only contain letters.")
+        continue
+
     guess = guess.lower()
 
     if guess == word_of_the_day:
